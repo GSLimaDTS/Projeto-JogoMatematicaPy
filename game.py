@@ -1,4 +1,5 @@
 from Models.calcular import Calcular
+import Models.Tela
 
 
 def main() -> None:
@@ -7,26 +8,30 @@ def main() -> None:
 
 
 def jogar(pontos: int) -> None:
-    dificuldade: int = int(input('Informe o nivel de dificuldade desejado:[1, 2, 3, 4]: '))
+    Models.Tela.nivel_dificuldade()
+    dificuldade: int = int(input())
 
     calc: Calcular = Calcular(dificuldade)
 
-    print('Informe o resultado da seguinte operacao: ')
+    Models.Tela.informe_resultado_operacao()
     calc.mostrar_operacao()
 
     resultado: int = int(input())
 
     if calc.checar_resultado(resultado):
         pontos += 1
-        print(f'Voce Tem {pontos} ponto(s)')
+        Models.Tela.mostar_pontos(pontos)
+    else:
+        pontos -= 1
+        Models.Tela.mostar_pontos(pontos)
 
-    continuar: int = int(input('Deseja continuar jogando? [1 = sim, 0 = nao]: '))
+    Models.Tela.escolha_continuar()
+    continuar: int = int(input())
 
     if continuar:
         jogar(pontos)
     else:
-        print(f'Voce finalizou o jogo com {pontos} ponto(s)')
-        print('Ate a proxima!')
+        Models.Tela.mensagem_encerramneto(pontos)
 
 
 if __name__ == '__main__':
